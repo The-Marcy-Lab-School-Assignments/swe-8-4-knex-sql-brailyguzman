@@ -3,8 +3,8 @@ const knex = require('./knex');
 const dangerousDynamicQuery = async () => {
   const id = `1; UPDATE books SET title = 'HAHAHACKED'`;
 
-  const query = `SELECT * FROM books WHERE id = ${id};`;
-  await knex.raw(query);
+  const query = `SELECT * FROM books WHERE id = ?;`;
+  await knex.raw(query, [id]);
 
   const { rows } = await knex.raw('SELECT id, title FROM books');
   console.log('Hacked output', rows);
